@@ -27,6 +27,7 @@ This project provides an interactive Streamlit app for text embedding extraction
 - Visualize clustering results and download the image
 
 ---
+
 ### ⚠️ Disclaimer
   
 This project is intended for `educational and research purposes only`.  
