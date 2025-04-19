@@ -43,6 +43,7 @@ def visualize_clusters(df):
 
     vectors = np.array(df['vector'].tolist())
     n_samples = len(vectors)
+    n_clusters = len(set(df['cluster'])) - (1 if -1 in df['cluster'].unique() else 0)
 
     # 动态调整 TSNE perplexity
     perplexity = min(30, max(2, n_samples // 3))
@@ -65,10 +66,12 @@ def visualize_clusters(df):
     # 创建图形对象
     figs = []
 
+    subtitle = f"样本数：{n_samples}，聚类数：{n_clusters}"
+
     # PCA 图
     fig1 = plt.figure(figsize=(8, 5))
     sns.scatterplot(data=df, x='pca_x', y='pca_y', hue='cluster', palette='tab10')
-    plt.title("HDBSCAN 聚类可视化（PCA降维）")
+    plt.title(f"HDBSCAN 聚类可视化（PCA降维）\n{subtitle}")
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
     figs.append(fig1)
@@ -76,7 +79,7 @@ def visualize_clusters(df):
     # TSNE 图
     fig2 = plt.figure(figsize=(8, 5))
     sns.scatterplot(data=df, x='tsne_x', y='tsne_y', hue='cluster', palette='tab10')
-    plt.title("HDBSCAN 聚类可视化（TSNE降维）")
+    plt.title(f"HDBSCAN 聚类可视化（TSNE降维）\n{subtitle}")
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
     figs.append(fig2)
@@ -84,7 +87,7 @@ def visualize_clusters(df):
     # UMAP 图
     fig3 = plt.figure(figsize=(8, 5))
     sns.scatterplot(data=df, x='umap_x', y='umap_y', hue='cluster', palette='tab10')
-    plt.title("HDBSCAN 聚类可视化（UMAP降维）")
+    plt.title(f"HDBSCAN 聚类可视化（UMAP降维）\n{subtitle}")
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
     figs.append(fig3)
