@@ -95,7 +95,7 @@ elif option == "向量可视化":
                         # 将图片保存到临时缓冲区
                         img_buf = BytesIO()
                         fig.set_size_inches(6, 4)  # 控制图像大小
-                        fig.savefig(img_buf, format="png", dpi=100, bbox_inches='tight')
+                        fig.savefig(img_buf, format="png", dpi=300, bbox_inches='tight')
                         img_buf.seek(0)
 
                         # 添加到 zip 包
