@@ -2,11 +2,13 @@
 # 🧠# Vector Clustering & Visualization
 
 
+
 本项目提供一个交互式 Web 界面，用于从文本中提取嵌入向量、进行 HDBSCAN 聚类分析，并使用 t-SNE 进行可视化。
 
 This project provides an interactive Streamlit app for text embedding extraction, HDBSCAN clustering, and TSNE-based visualization.
 
----
+
+
 
 ## 🚀 Features
 
