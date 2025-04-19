@@ -7,7 +7,7 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from io import BytesIO
 import zipfile
-
+from embeddings.token_cost import count_tokens, estimate_cost
 
 
 # 设置页面宽度模式
@@ -65,8 +65,16 @@ elif option == "提取文本向量":
     submit1 = st.button('提取文本向量')
     if uploaded_txt and openai_key and submit1:
         with st.spinner("AI 正在提取文本向量..."):
-            # 传递所选的模型名和用户输入的 chunk_size 与 chunk_overlap
+
             df, name_base = extract_text_vectors(uploaded_txt, openai_key, openai_model, chunk_size, chunk_overlap)
+
+            # 获取所有文本段落
+            text_list = df['text'].tolist()
+            total_tokens = count_tokens(text_list, openai_model)
+            estimated_usd = estimate_cost(total_tokens, openai_model)
+
+            st.info(f"📊 估算 token 数量：{total_tokens}")
+            st.info(f"💵 预计消耗金额：${estimated_usd:.4f} USD")
 
             # 下载 CSV 文件
             st.download_button("下载文本向量", df.to_csv(index=False), file_name=f'{name_base}.csv')
