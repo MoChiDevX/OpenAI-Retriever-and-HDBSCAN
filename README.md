@@ -25,3 +25,14 @@ This project provides an interactive Streamlit app for text embedding extraction
 ### 3. 向量可视化 | Vector Visualization
 - Reduce dimensions using ```PCA```,```t-SNE```,```u-map```
 - Visualize clustering results and download the image
+
+---
+### ⚠️ Disclaimer
+  
+This project is intended for `educational and research purposes only`.  
+
+It respects JD.com's data and rate limits, and is designed with slow-mode, randomized delays, and anti-abuse measures.
+
+
+🚫 Please do not use this script for any unauthorized or commercial purposes.
+
