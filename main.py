@@ -7,6 +7,7 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from io import BytesIO
 import zipfile
+import pandas as pd
 from embeddings.token_cost import count_tokens, estimate_cost
 
 
@@ -99,17 +100,21 @@ elif option == "向量可视化":
             else:
                 # 获取图像对象
 
-                figs = visualize_clusters(df)
-                tab_names = ["PCA", "t-SNE", "UMAP"]
+                if 'df' not in st.session_state:
+                    st.session_state['df'] = []
 
+                figs, pca_x, pca_y,tsne_x, tsne_y, umap_x, umap_y = visualize_clusters(df)
+                x_lis = [pca_x, tsne_x, umap_x]
+                y_lis = [pca_y, tsne_y, umap_y]
+                tab_names = ["PCA", "t-SNE", "UMAP"]
                 # 初始化 zip 文件缓冲区
                 zip_buffer = BytesIO()
                 with zipfile.ZipFile(zip_buffer, "w") as zip_file:
                     for i, (fig, name) in enumerate(zip(figs, tab_names), start=1):
                         # 将图片保存到临时缓冲区
                         img_buf = BytesIO()
-                        fig.set_size_inches(6, 4)  # 控制图像大小
-                        fig.savefig(img_buf, format="png", dpi=300, bbox_inches='tight')
+                        fig.set_size_inches(4, 2.5)  # 控制图像大小
+                        fig.savefig(img_buf, format="png", dpi=300)
                         img_buf.seek(0)
 
                         # 添加到 zip 包
@@ -117,8 +122,14 @@ elif option == "向量可视化":
 
                 # 展示 tab 页面
                 tabs = st.tabs(tab_names)
-                for tab, fig, name in zip(tabs, figs, tab_names):
+                for tab, fig, name, x, y in zip(tabs, figs, tab_names, x_lis, y_lis):
                     with tab:
+                        df_data = pd.DataFrame({
+                            "x": x,
+                            "y": y
+                        })
+                        st.scatter_chart(df_data, x="x", y="y")
+                        st.divider()
                         st.pyplot(fig, use_container_width=True)
                         st.info(f"当前显示：{name} 降维图")
 
