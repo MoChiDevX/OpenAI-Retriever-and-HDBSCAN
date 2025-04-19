@@ -26,7 +26,7 @@ if option == "HDBSCAN聚类":
 
     st.write('''```bash
             - 高相似度（>0.8）：设置较小的 min_cluster_size（例如 5），这样聚类会将相似的点合并到少数类别中。
-- 中等相似度（0.5 ≤ avg_similarity < 0.8）：设置适中的 min_cluster_size（例如 10），聚类结果会有适中的类别数。
+- 中等相似度（0.5 - 0.8）：设置适中的 min_cluster_size（例如 10），聚类结果会有适中的类别数。
 - 低相似度（<0.5）：设置较大的 min_cluster_size（例如 20），这样聚类会产生更多的类别，因为数据之间的相似度较低。''')
     min_cluster_size = st.text_input("最小聚类值(建议3~20)", value="5")  # 用户输入最小聚类尺寸
     submit2 = st.button('加载聚类')
