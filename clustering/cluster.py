@@ -32,7 +32,6 @@ def cluster_vectors(df, min_cluster_size=5):
     df['cluster'] = labels  # 添加聚类标签列
     return df, clusterer
 
-# 使用t-SNE（t-分布邻域嵌入）降维可视化聚类结果
 
 
 
