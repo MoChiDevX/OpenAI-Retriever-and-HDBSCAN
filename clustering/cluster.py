@@ -38,7 +38,7 @@ def cluster_vectors(df, min_cluster_size=5):
 
 def visualize_clusters(df):
 
-    plt.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文黑体
+    plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
     plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
 
     vectors = np.array(df['vector'].tolist())
