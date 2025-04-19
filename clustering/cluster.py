@@ -32,6 +32,7 @@ def cluster_vectors(df, min_cluster_size=5):
     df['cluster'] = labels  # 添加聚类标签列
     return df, clusterer
 
+# 使用t-SNE（t-分布邻域嵌入）降维可视化聚类结果
 
 
 
@@ -64,7 +65,7 @@ def visualize_clusters(df):
     # 创建图形对象
     figs = []
 
-    subtitle = f"samples:{n_samples},clusters:{n_clusters}"
+    subtitle = f"num_smaples:{n_samples},num_clusters:{n_clusters}"
 
     # PCA 图
     fig1 = plt.figure(figsize=(8, 5))
@@ -90,4 +91,4 @@ def visualize_clusters(df):
     plt.tight_layout()
     figs.append(fig3)
 
-    return figs
+    return figs, df['pca_x'], df['pca_y'], df['tsne_x'], df['tsne_y'], df['umap_x'], df['umap_y']
