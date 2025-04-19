@@ -69,7 +69,7 @@ def visualize_clusters(df):
     # PCA 图
     fig1 = plt.figure(figsize=(8, 5))
     sns.scatterplot(data=df, x='pca_x', y='pca_y', hue='cluster', palette='tab10')
-    plt.title(f"HDBSCAN 聚类可视化（PCA降维）\n{subtitle}")
+    plt.title(f"HDBSCAN （PCA）\n{subtitle}")
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
     figs.append(fig1)
@@ -77,7 +77,7 @@ def visualize_clusters(df):
     # TSNE 图
     fig2 = plt.figure(figsize=(8, 5))
     sns.scatterplot(data=df, x='tsne_x', y='tsne_y', hue='cluster', palette='tab10')
-    plt.title(f"HDBSCAN 聚类可视化（TSNE降维）\n{subtitle}")
+    plt.title(f"HDBSCAN （t-SNE）\n{subtitle}")
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
     figs.append(fig2)
@@ -85,7 +85,7 @@ def visualize_clusters(df):
     # UMAP 图
     fig3 = plt.figure(figsize=(8, 5))
     sns.scatterplot(data=df, x='umap_x', y='umap_y', hue='cluster', palette='tab10')
-    plt.title(f"HDBSCAN 聚类可视化（UMAP降维）\n{subtitle}")
+    plt.title(f"HDBSCAN （UMAP）\n{subtitle}")
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
     figs.append(fig3)
