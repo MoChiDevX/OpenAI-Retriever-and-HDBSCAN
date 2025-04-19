@@ -21,11 +21,12 @@ option = st.sidebar.radio("请选择要运行的功能模块：", ["提取文本
 if option == "HDBSCAN聚类":
     st.header("🔍 HDBSCAN 聚类分析")
     uploaded_file = st.file_uploader("请上传包含向量的 csv 文件", type=["csv", "parquet"])
-    st.write('使用注释：')
+    st.write("<h4 style='font-size: 14px;'>使用注释：</h4>", unsafe_allow_html=True)
+
     st.write('''```bash
-            \n- 高相似度（>0.8）：设置较小的 min_cluster_size（例如 5），这样聚类会将相似的点合并到少数类别中。
-            \n- 中等相似度（0.5 ≤ avg_similarity < 0.8）：设置适中的 min_cluster_size（例如 10），聚类结果会有适中的类别数。
-            \n- 低相似度（<0.5）：设置较大的 min_cluster_size（例如 20），这样聚类会产生更多的类别，因为数据之间的相似度较低。''')
+            - 高相似度（>0.8）：设置较小的 min_cluster_size（例如 5），这样聚类会将相似的点合并到少数类别中。
+- 中等相似度（0.5 ≤ avg_similarity < 0.8）：设置适中的 min_cluster_size（例如 10），聚类结果会有适中的类别数。
+- 低相似度（<0.5）：设置较大的 min_cluster_size（例如 20），这样聚类会产生更多的类别，因为数据之间的相似度较低。''')
     min_cluster_size = st.text_input("最小聚类值(建议3~20)", value="5")  # 用户输入最小聚类尺寸
     submit2 = st.button('加载聚类')
     if uploaded_file is not None and submit2:
@@ -37,7 +38,7 @@ if option == "HDBSCAN聚类":
             st.write(f'🔥 前100条向量平均相似度：{similarity.mean():.4f}')
             st.success("✅ 聚类完成，-1类 代表 噪声")
             st.dataframe(df_clustered)
-            st.download_button("下载聚类结果为 CSV", df_clustered.to_csv(index=False), file_name="clustered_result.csv")
+            st.download_button("下载聚类结果", df_clustered.to_csv(index=False), file_name="clustered_result.csv")
 
 # 文本向量生成模块
 elif option == "提取文本向量":
@@ -68,7 +69,7 @@ elif option == "提取文本向量":
             df, name_base = extract_text_vectors(uploaded_txt, openai_key, openai_model, chunk_size, chunk_overlap)
 
             # 下载 CSV 文件
-            st.download_button("下载文本向量为 CSV", df.to_csv(index=False), file_name=f'{name_base}.csv')
+            st.download_button("下载文本向量", df.to_csv(index=False), file_name=f'{name_base}.csv')
 
 
 
@@ -116,7 +117,7 @@ elif option == "向量可视化":
                 # 提供 ZIP 下载按钮
                 zip_buffer.seek(0)
                 st.download_button(
-                    label="📦 下载所有可视化图像为 ZIP",
+                    label="📦 下载可视化图像集",
                     data=zip_buffer,
                     file_name="cluster_visualizations.zip",
                     mime="application/zip"
