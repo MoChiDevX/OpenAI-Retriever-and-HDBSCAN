@@ -21,7 +21,11 @@ option = st.sidebar.radio("请选择要运行的功能模块：", ["提取文本
 if option == "HDBSCAN聚类":
     st.header("🔍 HDBSCAN 聚类分析")
     uploaded_file = st.file_uploader("请上传包含向量的 csv 文件", type=["csv", "parquet"])
-    min_cluster_size = st.text_input("最小聚类大小(建议3~10)", value="5")  # 用户输入最小聚类尺寸
+    st.write('''```bash
+            \n- 高相似度（>0.8）：设置较小的 min_cluster_size（例如 5），这样聚类会将相似的点合并到少数类别中。
+            \n- 中等相似度（0.5 ≤ avg_similarity < 0.8）：设置适中的 min_cluster_size（例如 10），聚类结果会有适中的类别数。
+            \n- 低相似度（<0.5）：设置较大的 min_cluster_size（例如 20），这样聚类会产生更多的类别，因为数据之间的相似度较低。''')
+    min_cluster_size = st.text_input("最小聚类大小(建议3~20)", value="5")  # 用户输入最小聚类尺寸
     submit2 = st.button('加载聚类')
     if uploaded_file is not None and submit2:
         with st.spinner('AI 正在加载并处理聚类，请稍候...'):
@@ -29,10 +33,11 @@ if option == "HDBSCAN聚类":
             df_clustered, model = cluster_vectors(df, int(min_cluster_size))
             vectors = np.array(df['vector'].tolist())
             similarity = cosine_similarity(vectors[:100])
-            st.write(f"🔥 前100条向量平均相似度：{similarity.mean():.4f}\n高相似度（>0.8）：设置较小的 min_cluster_size（例如 5），这样聚类会将相似的点合并到少数类别中。\n中等相似度（0.5 ≤ avg_similarity < 0.8）：设置适中的 min_cluster_size（例如 10），聚类结果会有适中的类别数。\n低相似度（<0.5）：设置较大的 min_cluster_size（例如 20），这样聚类会产生更多的类别，因为数据之间的相似度较低。")
+            st.write(f'🔥 前100条向量平均相似度：{similarity.mean():.4f}')
             st.success("✅ 聚类完成，-1类 代表 噪声")
             st.dataframe(df_clustered)
             st.download_button("下载聚类结果为 CSV", df_clustered.to_csv(index=False), file_name="clustered_result.csv")
+
 
 # 文本向量生成模块
 elif option == "提取文本向量":
